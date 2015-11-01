@@ -1,5 +1,6 @@
 {
   "name": "ab-libs-network",
+  "version": "0.0.1",
   "description": "AB Libs wrapper for websockets.",
   "author": "AllBlue Monkey <monkey@allblue.pl>",
   "license": "MIT",
