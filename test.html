@@ -1,0 +1,21 @@
+<html>
+<head>
+    <script type="text/javascript" src="js/ab-client.js"></script>
+</head>
+<body>
+
+<button id="b">Send</button>
+
+<script type="text/javascript">
+    var c = new ABClient.Class('localhost', 8081);
+
+    c.setOnMessageReceivedListener(function(message) {
+        console.log('Message: ' + message);
+    });
+
+    document.getElementById('b').addEventListener('click', function() {
+        c.send('Hello!');
+    });
+</script>
+</body>
+</html>

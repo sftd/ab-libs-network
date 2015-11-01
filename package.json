@@ -1,0 +1,13 @@
+{
+  "name": "ab-libs-network",
+  "description": "AB Libs wrapper for websockets.",
+  "author": "AllBlue Monkey <monkey@allblue.pl>",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "0.8.x"
+  },
+  "devDependencies": {
+    "gulp": "3.9.x",
+    "gulp-concat": "^2.6.0"
+  }
+}
