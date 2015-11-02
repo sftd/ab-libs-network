@@ -12,7 +12,7 @@ s.setOnConnectedListener(function(ab_client) {
     console.log('Connected: ' + ab_client.id);
 });
 
-s.setOnMessageReceivedListener(function(ab_client, message) {
+s.setOnDataReceivedListener(function(ab_client, message) {
     console.log('Messsage from client `' + ab_client.id + '`: ' + message);
     ab_client.send('Echo: ' + message);
 });
@@ -30,7 +30,7 @@ c.setOnConnectedListener(function() {
     console.log('Connected to server.');
 });
 
-c.setOnMessageReceivedListener(function(message) {
+c.setOnDataReceivedListener(function(message) {
     console.log('Message from server: ' + message);
 });
 

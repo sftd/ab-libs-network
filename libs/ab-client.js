@@ -116,7 +116,7 @@ var ABClient = {
         self.listeners_OnDisconnected = listener;
     },
 
-    setOnMessageReceivedListener: function(listener)
+    setOnDataReceivedListener: function(listener)
     {
         var self = this.self;
 

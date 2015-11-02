@@ -9,7 +9,7 @@
 <script type="text/javascript">
     var c = new ABClient.Class('localhost', 8081);
 
-    c.setOnMessageReceivedListener(function(message) {
+    c.setOnDataReceivedListener(function(message) {
         console.log('Message: ' + message);
     });
 

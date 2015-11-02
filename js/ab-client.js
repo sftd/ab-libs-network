@@ -78,7 +78,7 @@ var ABClient = {
         self.listeners_OnConnectedListener = listener;
     },
 
-    setOnMessageReceivedListener: function(listener)
+    setOnDataReceivedListener: function(listener)
     {
         var self = this.self;
 

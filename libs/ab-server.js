@@ -18,7 +18,7 @@ var ABServer = {
     listeners_OnConnected: null,
     listeners_OnConnecting: null,
     listeners_OnDisconnected: null,
-    listeners_OnMessageReceived: null,
+    listeners_OnDataReceived: null,
 
     Class: function(port)
     {
@@ -68,8 +68,8 @@ var ABServer = {
         });
 
         ws_socket.on('message', function(message) {
-            if (!self.listeners_OnMessageReceived !== null)
-                self.listeners_OnMessageReceived(client, message);
+            if (!self.listeners_OnDataReceived !== null)
+                self.listeners_OnDataReceived(client, message);
         });
     },
 
@@ -85,10 +85,10 @@ var ABServer = {
         self.listeners_OnDisconnected = listener;
     },
 
-    setOnMessageReceivedListener: function(listener) {
+    setOnDataReceivedListener: function(listener) {
         var self = this.self;
 
-        self.listeners_OnMessageReceived = listener;
+        self.listeners_OnDataReceived = listener;
     }
 
 };
