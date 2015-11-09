@@ -45,8 +45,8 @@ var ABClient = {
 
         self.socket.addEventListener('open', function() {
             self.connected = true;
-            if (self.listeners_OnConnectedListener !== null)
-                self.listeners_OnConnectedListener();
+            if (self.listeners_OnConnected !== null)
+                self.listeners_OnConnected();
             while (self.messages.length > 0) {
                 if (!self.connected)
                     break;

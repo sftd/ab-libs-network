@@ -1,7 +1,7 @@
 
 'use strict';
 
-
+var WebSocket = require('ws');
 var ABClient = require('./libs.js').ABClient;
 var ABServer = require('./libs.js').ABServer;
 
@@ -24,19 +24,29 @@ s.setOnDisconnectedListener(function(ab_client) {
 s.listen();
 
 /* ABClient */
-var c = new ABClient.Class('localhost', 8081);
+var clients = [
+    new ABClient.Class('localhost', 8081),
+    new ABClient.Class('localhost', 8081),
+    new ABClient.Class('localhost', 8081)
+];
 
-c.setOnConnectedListener(function() {
-    console.log('Connected to server.');
-});
+for (var i = 0; i < clients.length; i++) {
+    var c = clients[i];
 
-c.setOnDataReceivedListener(function(message) {
-    console.log('Message from server: ' + message);
-});
+    var index = function(j){return j}(i);
 
-c.setOnDisconnectedListener(function() {
-    console.log('Disconnected from server.');
-});
+    c.setOnConnectedListener(function() {
+        console.log('Client + %d: connected to server.', index);
+    });
+
+    c.setOnDataReceivedListener(function(message) {
+        console.log('Client %d: message from server: %s.', index, message);
+    });
+
+    c.setOnDisconnectedListener(function() {
+        console.log('Client %d: disconnected from server.', index);
+    });
+}
 
 var test = function(n) {
     var n = typeof n === 'undefined' ? 0 : n;
@@ -44,7 +54,8 @@ var test = function(n) {
     if (n >= 5)
         return;
 
-    c.send('My test message + ' + n + '.');
+    for (var i = 0; i < clients.length; i++)
+        clients[i].send('My test message + ' + i + '.');
     setTimeout(function() { test(n + 1); }, 5000);
 };
 test();

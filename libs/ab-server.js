@@ -6,6 +6,8 @@ var ws = require('ws');
 /* Internal */
 var ABServer_Client = require('./../libs.js').ABServer_Client;
 
+var index = 0;
+
 /* Class */
 var ABServer = {
     self: null,
@@ -58,18 +60,19 @@ var ABServer = {
         var client = new ABServer_Client.Class(client_id, ws_socket);
         self.clients[client_id] = client;
 
-
-        if (self.listeners_OnConnected !== null)
+        if (self.listeners_OnConnected !== null) {
             self.listeners_OnConnected(client);
+        }
 
         ws_socket.on('close', function() {
+            self.clients[client_id] = null;
             if (!self.listeners_OnDisconnected !== null)
                 self.listeners_OnDisconnected(client);
         });
 
-        ws_socket.on('message', function(message) {
+        ws_socket.on('message', function(data) {
             if (!self.listeners_OnDataReceived !== null)
-                self.listeners_OnDataReceived(client, message);
+                self.listeners_OnDataReceived(client, data);
         });
     },
 

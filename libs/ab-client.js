@@ -17,7 +17,7 @@ var ABClient = {
     socket: null,
 
     state: -1,
-    messages: [],
+    datas: null,
 
     listeners_OnConnected: null,
     listeners_OnDisconnected: null,
@@ -30,6 +30,8 @@ var ABClient = {
 
         self.host = host;
         self.port = port;
+
+        self.datas = [];
 
         self.state = ABClient.STATE_DICONNECTED;
     },
@@ -70,11 +72,11 @@ var ABClient = {
             self.state = ABClient.STATE_CONNECTED;
             if (self.listeners_OnConnectedListener !== null)
                 self.listeners_OnConnectedListener();
-            while (self.messages.length > 0) {
+            while (self.datas.length > 0) {
                 if (self.state !== ABClient.STATE_CONNECTED)
                     break;
-                var message = self.messages.pop(0);
-                self.socket.send(message);
+                var data = self.datas.pop(0);
+                self.socket.send(data);
              }
         });
     },
@@ -91,14 +93,14 @@ var ABClient = {
     {
         var self = this.self;
 
-        self.messages.push(message);
+        self.datas.push(message);
 
-        while (self.messages.length > 0) {
+        while (self.datas.length > 0) {
             if (self.state !== ABClient.STATE_CONNECTED) {
                 self.connect();
                 break;
             }
-            self.socket.send(self.messages.pop(0));
+            self.socket.send(self.datas.pop(0));
         }
     },
 
