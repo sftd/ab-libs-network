@@ -1,7 +1,7 @@
 
 'use strict';
 
-var WebSocket = require('ws');
+var SocketIO_Client = require('socket.io-client');
 
 var ABClient = {
     self: null,
@@ -46,9 +46,9 @@ var ABClient = {
 
         self.state === ABClient.STATE_CONNECTING;
 
-        self.socket = new WebSocket('ws://' + self.host + ':' + self.port);
+        self.socket = new SocketIO_Client('ws://' + self.host + ':' + self.port);
 
-        self.socket.addEventListener('close', function() {
+        self.socket.addEventListener('disconnect', function() {
             var t_state = self.state;
             self.state = ABClient.STATE_DICONNECTED;
 
@@ -59,16 +59,16 @@ var ABClient = {
                 self.connect();
         });
 
-        self.socket.addEventListener('error', function(e) {
-            console.log('Socket error: ', e);
-        });
-
-        self.socket.addEventListener('message', function(e) {
+        // self.socket.addEventListener('error', function(e) {
+        //     console.log('Socket error: ', e);
+        // });
+        //
+        self.socket.addEventListener('message', function(data) {
             if (self.listeners_OnMesssageReceived !== null)
-                self.listeners_OnMesssageReceived(e.data);
+                self.listeners_OnMesssageReceived(data);
         });
 
-        self.socket.addEventListener('open', function() {
+        self.socket.addEventListener('connect', function() {
             self.state = ABClient.STATE_CONNECTED;
             if (self.listeners_OnConnectedListener !== null)
                 self.listeners_OnConnectedListener();

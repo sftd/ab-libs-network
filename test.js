@@ -1,7 +1,6 @@
 
 'use strict';
 
-var WebSocket = require('ws');
 var ABClient = require('./libs.js').ABClient;
 var ABServer = require('./libs.js').ABServer;
 
@@ -54,8 +53,10 @@ var test = function(n) {
     if (n >= 5)
         return;
 
-    for (var i = 0; i < clients.length; i++)
+    for (var i = 0; i < clients.length; i++) {
         clients[i].send('My test message + ' + i + '.');
+        console.log('Message sent.');
+    }
     setTimeout(function() { test(n + 1); }, 5000);
 };
 test();
